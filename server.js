@@ -104,7 +104,7 @@ app.post('/recipes', jsonParser, function(request,response){
 
 
 app.put('/recipes/:id', jsonParser, function(request, response){
-  var requiredFields = ['name', 'budget', 'id'];
+  var requiredFields = ['name', 'ingredients', 'id'];
   for (let i=0; i<requiredFields.length; i++) {
     var field = requiredFields[i];
     if (!(field in request.body)) {
@@ -124,7 +124,7 @@ app.put('/recipes/:id', jsonParser, function(request, response){
   const updatedItem = ShoppingList.update({
     id: request.params.id,
     name: request.body.name,
-    budget: request.body.budget
+    ingredients: request.body.ingredients
   });
   response.status(204).json(updatedItem);
 });
