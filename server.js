@@ -44,6 +44,13 @@ app.post('/shopping-list', jsonParser, (req, res) => {
   res.status(201).json(item);
 });
 
+app.delete('/shopping-list/:id', (req, res) => {
+  ShoppingList.delete(req.params.id);
+  console.log(`Deleted shopping list item \`${req.params.id}\``);
+  res.status(204).end();
+});
+
+
 
 app.get('/recipes', function(request,response){
 	response.json(Recipes.get());
@@ -51,7 +58,7 @@ app.get('/recipes', function(request,response){
 
 app.post('/recipes', jsonParser, function(request,response){
   var requiredFields = ['name', 'ingredients'];
-  for (let i=0; i<requiredFields.length; i++) {
+  for (let i=0; i<requiredFields.length; i++) { //validating the response from the API
     var field = requiredFields[i];
     if (!(field in request.body)) {
       var message = `Missing \`${field}\` in request body`
@@ -60,8 +67,14 @@ app.post('/recipes', jsonParser, function(request,response){
     }
   }
 
-  var item = Recipes.create(request.body.name, request.body.ingredients);
+  var item = Recipes.create(request.body.name, request.body.ingredients); 
   response.status(201).json(item);
+});
+
+app.delete('/recipes/:id', function(request, response){
+  Recipes.delete(request.params.id);
+  console.log(`Deleted shopping list item \`${request.params.id}\``);
+  response.status(204).end();
 });
 
 
